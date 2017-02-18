@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <h1 class="page-header"><i class="glyphicon glyphicon-warning-sign"></i> Secure Page</h1>
+  {% include 'flash_messages.html' %}
+  <p>This page is a secure page, it should only be accessible if you are logged in.</p>
+{% endblock %}

@@ -1,0 +1,11 @@
+body {
+    padding-top: 50px;
+}
+
+.login-form {
+  width: 400px;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #f0f0f0;
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.3);
+}
