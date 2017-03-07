@@ -4,10 +4,11 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-
+import os
 from app import app, db
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, session, abort, jsonify
 from forms import *
+from werkzeug.utils import secure_filename
 
 ###
 # Routing for your application.
@@ -20,12 +21,17 @@ def home():
 @app.route('/profile/', methods=['GET', 'POST'])
 def profile():
     """Render website's profile page."""
-    if request.method == 'POST':
+    if request.method == 'GET':
         # Accept profile details
         firstname = request.form['fistname']
         lastname = request.form['lastname']
         age = request.form['age']
         biography = request.form['biography']
+        gender = request.form['gender']
+        file_folder = app.config['UPLOAD_FOLDER']
+        file = request.files['file']
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(file_folder, filename))
         
         flash('Profile Added', 'success')
         next = request.args.get('next')
@@ -34,7 +40,7 @@ def profile():
         flash('There was an error! lets try again', 'oops')
 
     return render_template('profile.html')
-
+    
 @app.route('/profiles/', methods= ['GET', 'POST'])
 def profiles():
     """Render the website's profiles page."""
