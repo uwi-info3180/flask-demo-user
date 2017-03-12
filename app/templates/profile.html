@@ -6,7 +6,7 @@
 
   <div class="Profile-form">
     <h2>Tell us more about </h2>
-    <form action="{{ url_for('profile') }}" method="post" enctype="multipart/form-data">
+    <form action="{{ url_for('profile') }}" method="POST" enctype="multipart/form-data">
       <div class="form-group">
          <input type="text" name="firstname" placeholder="First Name"/> 
       </div>
@@ -23,11 +23,11 @@
             <select name="Gender">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
-                <option value="other">other</option> 
+                <option value="other">Other</option> 
             </select>
       </div>
     <div class="form-group">
-        <label for="file">Upload Profile Picture </label>
+        <label>Upload Profile Picture </label>
         <input type="file" name="file" class="form-control"/>
     </div>
       <button type="submit" name="submit" class="btn btn-primary btn-block">Submit</button>

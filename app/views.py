@@ -7,7 +7,7 @@ This file creates your application.
 import os
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash, session, abort, jsonify
-from forms import *
+from forms import profileForm
 from werkzeug.utils import secure_filename
 
 ###
@@ -18,28 +18,29 @@ def home():
     """Render profile page"""
     return render_template('profile.html')
     
-@app.route('/profile/', methods=['GET', 'POST'])
+@app.route('/profile', methods=['POST', 'GET'])
 def profile():
     """Render website's profile page."""
-    if request.method == 'GET':
+
+    file_folder = app.config['UPLOAD_FOLDER']
+    proform = profileForm()
+    if request.method == 'POST':
         # Accept profile details
-        firstname = request.form['fistname']
-        lastname = request.form['lastname']
-        age = request.form['age']
-        biography = request.form['biography']
-        gender = request.form['gender']
-        file_folder = app.config['UPLOAD_FOLDER']
+        firstname = proform.firstname.data
+        lastname = proform.lastname.data
+        age = proform.age.data
+        biography = proform.biography.data
+        gender = proform.gender.data
         file = request.files['file']
         filename = secure_filename(file.filename)
-        file.save(os.path.join(file_folder, filename))
-        
-        flash('Profile Added', 'success')
-        next = request.args.get('next')
+        path = "./app/static/Profilepics/"+ filename
+        file.save(path)
+        file = path
         return redirect(url_for('profile'))
     else:
         flash('There was an error! lets try again', 'oops')
 
-    return render_template('profile.html')
+    return render_template('profile.html', form = proform)
     
 @app.route('/profiles/', methods= ['GET', 'POST'])
 def profiles():
