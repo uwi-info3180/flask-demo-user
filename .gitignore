@@ -1,4 +1,4 @@
-# Files to ignore when adding and committing files to a repository
+# Files to ignore after adding and committing files to a repository
 .DS_Store
 Thumbs.db
 
