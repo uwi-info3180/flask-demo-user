@@ -8,6 +8,9 @@
     <h2>Tell us more about </h2>
     <form action="{{ url_for('profile') }}" method="POST" enctype="multipart/form-data">
       <div class="form-group">
+         <input type="text" name="username" placeholder="Username"/> 
+      </div>
+      <div class="form-group">
          <input type="text" name="firstname" placeholder="First Name"/> 
       </div>
       <div class="form-group">
@@ -20,7 +23,7 @@
          <textarea name="biography" placeholder="Biography" rows="10" cols="30"></textarea>
       </div>
     <div class="form-group">
-            <select name="Gender">
+            <select name="gender">
                 <option value="male">Male</option>
                 <option value="female">Female</option>
                 <option value="other">Other</option> 

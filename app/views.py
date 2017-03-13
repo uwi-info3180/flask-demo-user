@@ -4,11 +4,12 @@ Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
 Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
 This file creates your application.
 """
-import os
+import os, json, time
 from app import app, db
 from flask import render_template, request, redirect, url_for, flash, session, abort, jsonify
 from forms import profileForm
 from werkzeug.utils import secure_filename
+from models import UserProfile
 
 ###
 # Routing for your application.
@@ -17,6 +18,8 @@ from werkzeug.utils import secure_filename
 def home():
     """Render profile page"""
     return render_template('profile.html')
+def date():
+    return time.strftime("%D")
     
 @app.route('/profile', methods=['POST', 'GET'])
 def profile():
@@ -26,8 +29,9 @@ def profile():
     proform = profileForm()
     if request.method == 'POST':
         # Accept profile details
-        firstname = proform.firstname.data
-        lastname = proform.lastname.data
+        username=proform.username.data
+        first_name = proform.first_name.data
+        last_name = proform.last_name.data
         age = proform.age.data
         biography = proform.biography.data
         gender = proform.gender.data
@@ -36,12 +40,16 @@ def profile():
         path = "./app/static/Profilepics/"+ filename
         file.save(path)
         file = path
+        user = UserProfile(100,username,first_name,last_name,age,gender,biography,file,date())
+        db.session.add(user)
+        db.session.commit() 
         return redirect(url_for('profile'))
     else:
         flash('There was an error! lets try again', 'oops')
 
     return render_template('profile.html', form = proform)
     
+
 @app.route('/profiles/', methods= ['GET', 'POST'])
 def profiles():
     """Render the website's profiles page."""
