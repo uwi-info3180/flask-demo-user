@@ -12,3 +12,10 @@ psycopg2
 # Production Server
 # ----------------------
 gunicorn
+
+Jinja2
+MarkupSafe
+Werkzeug
+click
+itsdangerous
+wsgiref
