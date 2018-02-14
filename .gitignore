@@ -8,3 +8,6 @@ Thumbs.db
 # virtualenv
 .venv/
 venv/
+
+# PyCharm and other IntelliJ products
+.idea
