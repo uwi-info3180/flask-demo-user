@@ -10,6 +10,7 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from forms import LoginForm
 from models import UserProfile
+import hashlib;
 
 ###
 # Routing for your application.
@@ -22,13 +23,13 @@ def home():
     return render_template('home.html')
 
 
-@app.route('/about/')
+@app.route('/about')
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
 
-@app.route('/secure-page/')
+@app.route('/secure-page')
 @login_required
 def secure_page():
     """Render a secure page on our website that only logged in users can access."""
@@ -51,7 +52,7 @@ def login():
         # Query our database to see if the username and password entered
         # match a user that is in the database.
         username = form.username.data
-        password = form.password.data
+        password = hashlib.sha256(form.password.data).hexdigest()
 
         user = UserProfile.query.filter_by(username=username, password=password)\
         .first()
@@ -64,7 +65,7 @@ def login():
 
             flash('Logged in successfully.', 'success')
             next = request.args.get('next')
-            return redirect(url_for('home'))
+            return redirect(next or url_for('home'))
         else:
             flash('Username or Password is incorrect.', 'danger')
 
