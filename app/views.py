@@ -10,7 +10,7 @@ from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
 from forms import LoginForm
 from models import UserProfile
-import hashlib
+from werkzeug.security import check_password_hash
 
 ###
 # Routing for your application.
@@ -39,7 +39,7 @@ def secure_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        # if user is already logged in, just redirec them to our secure page
+        # if user is already logged in, just redirect them to our secure page
         # or some other page like a dashboard
         return redirect(url_for('secure_page'))
 
@@ -52,12 +52,14 @@ def login():
         # Query our database to see if the username and password entered
         # match a user that is in the database.
         username = form.username.data
-        password = hashlib.sha256(form.password.data).hexdigest()
+        password = form.password.data
 
-        user = UserProfile.query.filter_by(username=username, password=password)\
-        .first()
+        # user = UserProfile.query.filter_by(username=username, password=password)\
+        # .first()
+        # or
+        user = UserProfile.query.filter_by(username=username).first()
 
-        if user is not None:
+        if user is not None and check_password_hash(user.password, password):
             remember_me = False
 
             if 'remember_me' in request.form:
@@ -69,8 +71,9 @@ def login():
             login_user(user, remember=remember_me)
 
             flash('Logged in successfully.', 'success')
-            next = request.args.get('next')
-            return redirect(next or url_for('home'))
+
+            next_page = request.args.get('next')
+            return redirect(next_page or url_for('home'))
         else:
             flash('Username or Password is incorrect.', 'danger')
 
