@@ -58,10 +58,15 @@ def login():
         .first()
 
         if user is not None:
+            remember_me = False
+
+            if 'remember_me' in request.form:
+                remember_me = True
+
             # If the user is not blank, meaning if a user was actually found,
             # then login the user and create the user session.
             # user should be an instance of your `User` class
-            login_user(user)
+            login_user(user, remember=remember_me)
 
             flash('Logged in successfully.', 'success')
             next = request.args.get('next')
