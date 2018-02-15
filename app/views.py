@@ -15,21 +15,25 @@ from models import UserProfile
 # Routing for your application.
 ###
 
+
 @app.route('/')
 def home():
     """Render website's home page."""
     return render_template('home.html')
+
 
 @app.route('/about/')
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
 
+
 @app.route('/secure-page/')
 @login_required
 def secure_page():
     """Render a secure page on our website that only logged in users can access."""
     return render_template('secure_page.html')
+
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -60,12 +64,13 @@ def login():
 
             flash('Logged in successfully.', 'success')
             next = request.args.get('next')
-            return redirect(url_for('secure_page'))
+            return redirect(url_for('home'))
         else:
             flash('Username or Password is incorrect.', 'danger')
 
     flash_errors(form)
     return render_template('login.html', form=form)
+
 
 @app.route("/logout")
 @login_required
@@ -75,9 +80,11 @@ def logout():
     flash('You have been logged out.', 'danger')
     return redirect(url_for('home'))
 
+
 @login_manager.user_loader
 def load_user(id):
     return UserProfile.query.get(int(id))
+
 
 # Flash errors from the form if validation fails
 def flash_errors(form):
@@ -104,7 +111,8 @@ def send_text_file(file_name):
 def add_header(response):
     """
     Add headers to both force latest IE rendering engine or Chrome Frame,
-    and also to cache the rendered page for 10 minutes.
+    and also tell the browser not to cache the rendered page. If we wanted
+    to we could change max-age to 600 seconds which would be 10 minutes.
     """
     response.headers['X-UA-Compatible'] = 'IE=Edge,chrome=1'
     response.headers['Cache-Control'] = 'public, max-age=0'
@@ -118,4 +126,4 @@ def page_not_found(error):
 
 
 if __name__ == '__main__':
-    app.run(debug=True,host="0.0.0.0",port="8080")
+    app.run(debug=True, host="0.0.0.0", port="8080")
