@@ -7,8 +7,8 @@ This demo app demonstrates the use of Flask-Login for a simple login system for 
 To begin using this app you can do the following:
 
 1. Clone the repository to your local machine or Cloud9.
-2. Create a Python virtual environment e.g. `virtualenv venv`
-3. Enter the virtual environment using `source venv/bin/activate`
+2. Create a Python virtual environment e.g. `python -m venv venv` (or `python3 -m venv venv` or `python3.5 -m venv venv` on Cloud 9)
+3. Enter the virtual environment using `source venv/bin/activate` (or `.\venv\Scripts\activate` if you are using Windows) 
 4. Install the dependencies using Pip. e.g. `pip install -r requirements.txt`. __Note:__ Ensure you have PostgreSQL already installed and a database created.
 5. Edit the `app/__init__.py` file and enter your database credentials and database name.
 6. Run the migrations by typing `python flask-migrate.py db upgrade`
