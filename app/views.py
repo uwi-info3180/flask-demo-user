@@ -95,7 +95,8 @@ def load_user(id):
     return UserProfile.query.get(int(id))
 
 
-# Flash errors from the form if validation fails
+# Flash errors from the form if validation fails with Flask-WTF
+# http://flask.pocoo.org/snippets/12/
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
