@@ -3,5 +3,36 @@
 {% block main %}
   <h1><img src="{{ url_for('static', filename="images/icon-information.svg") }}" /> Secure Page</h1>
   {% include 'flash_messages.html' %}
-  <p>This page is a secure page, it should only be accessible if you are logged in.</p>
+  <div class="alert alert-info">This page is a secure page, it should only be accessible if you are logged in.</div>
+  <canvas id="myChart"></canvas>
+{% endblock %}
+
+{% block js %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels: ["January", "February", "March", "April", "May", "June", "July"],
+            datasets: [{
+                label: "Sales",
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [0, 10, 5, 2, 20, 30, 45],
+            }]
+        },
+
+        // Configuration options go here
+            options: {
+                title: {
+                    display: true,
+                    text: 'Monthly Sales Figures'
+                }
+            }
+    });
+    </script>
 {% endblock %}
