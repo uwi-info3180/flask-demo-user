@@ -90,6 +90,8 @@ def logout():
     return redirect(url_for('home'))
 
 
+# This callback is used to reload the user object from the user ID stored in the session.
+# It should take the unicode ID of a user, and return the corresponding user object.
 @login_manager.user_loader
 def load_user(id):
     return UserProfile.query.get(int(id))
