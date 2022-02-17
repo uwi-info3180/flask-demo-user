@@ -1,7 +1,7 @@
 """
-Flask Documentation:     http://flask.pocoo.org/docs/
-Jinja2 Documentation:    http://jinja.pocoo.org/2/documentation/
-Werkzeug Documentation:  http://werkzeug.pocoo.org/documentation/
+Flask Documentation:     https://flask.palletsprojects.com/
+Jinja2 Documentation:    https://jinja.palletsprojects.com/
+Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
 This file creates your application.
 """
 
@@ -48,7 +48,7 @@ def login():
     # handle this for us, and we use a custom LoginForm to validate.
     form = LoginForm()
     # Login and validate the user.
-    if request.method == 'POST' and form.validate_on_submit():
+    if form.validate_on_submit():
         # Query our database to see if the username and password entered
         # match a user that is in the database.
         username = form.username.data
