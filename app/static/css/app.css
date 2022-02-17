@@ -3,7 +3,7 @@ body {
 }
 
 main {
-  padding-top: 60px;
+  padding-top: 80px;
 }
 
 footer {
@@ -20,4 +20,16 @@ footer {
   max-width: 400px;
   padding: 15px;
   margin: 0 auto;
+}
+
+.login-form input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.login-form input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
