@@ -12,6 +12,7 @@ venv/
 
 # dotenv
 .env
+.flaskenv
 
 # PyCharm
 .idea
