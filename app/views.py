@@ -84,7 +84,7 @@ def logout():
 # It should take the unicode ID of a user, and return the corresponding user object.
 @login_manager.user_loader
 def load_user(id):
-    return UserProfile.query.get(int(id))
+    return db.session.execute(db.select(UserProfile).filter_by(id=id)).scalar()
 
 
 # Flash errors from the form if validation fails with Flask-WTF
