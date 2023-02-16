@@ -76,7 +76,7 @@ def login():
 def logout():
     # Logout the user and end the session
     logout_user()
-    flash('You have been logged out.', 'danger')
+    flash('You have been logged out.', 'success')
     return redirect(url_for('home'))
 
 
@@ -88,7 +88,6 @@ def load_user(id):
 
 
 # Flash errors from the form if validation fails with Flask-WTF
-# http://flask.pocoo.org/snippets/12/
 def flash_errors(form):
     for field, errors in form.errors.items():
         for error in errors:
