@@ -1,10 +1,3 @@
-"""
-Flask Documentation:     https://flask.palletsprojects.com/
-Jinja2 Documentation:    https://jinja.palletsprojects.com/
-Werkzeug Documentation:  https://werkzeug.palletsprojects.com/
-This file creates your application.
-"""
-
 from app import app, db, login_manager
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
@@ -49,15 +42,12 @@ def login():
     form = LoginForm()
     # Login and validate the user.
     if form.validate_on_submit():
-        # Query our database to see if the username and password entered
-        # match a user that is in the database.
         username = form.username.data
         password = form.password.data
 
-        # user = UserProfile.query.filter_by(username=username, password=password)\
-        # .first()
-        # or
-        user = UserProfile.query.filter_by(username=username).first()
+        # Query our database to see if the username and password entered
+        # match a user that is in the database.
+        user = db.session.execute(db.select(UserProfile).filter_by(username=username)).scalar()
 
         if user is not None and check_password_hash(user.password, password):
             remember_me = False
@@ -135,7 +125,3 @@ def add_header(response):
 def page_not_found(error):
     """Custom 404 page."""
     return render_template('404.html'), 404
-
-
-if __name__ == '__main__':
-    app.run(debug=True, host="0.0.0.0", port="8080")
