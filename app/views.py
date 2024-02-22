@@ -1,9 +1,10 @@
 from app import app, db, login_manager
-from flask import render_template, request, redirect, url_for, flash
+from flask import render_template, request, redirect, url_for, flash, abort
 from flask_login import login_user, logout_user, current_user, login_required
 from app.forms import LoginForm
 from app.models import UserProfile
 from werkzeug.security import check_password_hash
+from is_safe_url import is_safe_url
 
 ###
 # Routing for your application.
@@ -63,6 +64,12 @@ def login():
             flash('Logged in successfully.', 'success')
 
             next_page = request.args.get('next')
+
+            # is_safe_url should check if the url is safe
+            # for use in redirects, meaning it matches the request host.
+            if not is_safe_url(next_page, request.host):
+                return abort(400)
+
             return redirect(next_page or url_for('home'))
         else:
             flash('Username or Password is incorrect.', 'danger')
